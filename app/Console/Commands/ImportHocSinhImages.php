@@ -48,9 +48,10 @@ class ImportHocSinhImages extends Command
                 // Lấy tối đa 4 file ảnh
                 $files = array_slice(Storage::disk('suoihoa')->files($maHocSinhFolder), 0, 4);
                 $urls = [];
-
+                $dem=0;
                 foreach ($files as $file) {
-                    $filename = Str::random(5) . '_' . basename($file); // Tạo tên file mới
+
+                    $filename = $hocSinh->student_identification_code ."_". $dem . ".png"; // Tạo tên file mới
                     $destination = "images/$filename"; // Thư mục lưu mới
 
                     // Di chuyển ảnh vào storage/app/public/images
@@ -58,7 +59,9 @@ class ImportHocSinhImages extends Command
 
                     // Tạo URL cho ảnh
                     $urls[] = 'images/' . $filename;
+                    $dem++;
                 }
+            
 
                 // Ghép các URL bằng dấu phẩy
                 $faceUrl = implode(',', $urls);
